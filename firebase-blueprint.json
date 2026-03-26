@@ -1,0 +1,94 @@
+{
+  "entities": {
+    "subscription": {
+      "title": "Newsletter Subscription",
+      "description": "Stores email addresses for the newsletter.",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "The subscriber's email address."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the subscription was created."
+        }
+      },
+      "required": ["email", "createdAt"]
+    },
+    "order": {
+      "title": "Customer Order",
+      "description": "Stores details of a customer's order.",
+      "type": "object",
+      "properties": {
+        "customerName": {
+          "type": "string",
+          "description": "The name of the customer."
+        },
+        "customerEmail": {
+          "type": "string",
+          "format": "email",
+          "description": "The email of the customer."
+        },
+        "customerPhone": {
+          "type": "string",
+          "description": "The phone number of the customer."
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "name": { "type": "string" },
+              "price": { "type": "number" },
+              "quantity": { "type": "number" }
+            }
+          }
+        },
+        "total": {
+          "type": "number",
+          "description": "The total order amount."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "processing", "completed", "cancelled"],
+          "description": "The current status of the order."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the order was placed."
+        }
+      },
+      "required": ["customerName", "customerEmail", "items", "total", "status", "createdAt"]
+    },
+    "user": {
+      "title": "User Profile",
+      "description": "Stores user profile and role information.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["admin", "customer"] },
+        "displayName": { "type": "string" }
+      },
+      "required": ["email", "role"]
+    }
+  },
+  "firestore": {
+    "/subscriptions/{subscriptionId}": {
+      "schema": "subscription",
+      "description": "Collection of newsletter subscriptions."
+    },
+    "/orders/{orderId}": {
+      "schema": "order",
+      "description": "Collection of customer orders."
+    },
+    "/users/{userId}": {
+      "schema": "user",
+      "description": "Collection of user profiles."
+    }
+  }
+}
